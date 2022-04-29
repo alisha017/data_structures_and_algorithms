@@ -71,8 +71,11 @@ class LinkedList:
 
         raise Exception("Element not found")
 
-    def append(self, data):
-        node = Node(data)
+    def append(self, data: Any):
+        if isinstance(data, Node) is False:
+            node = Node(data)
+        else:
+            node = data
         if self.head is None:
             self.head = node
         else:
@@ -113,48 +116,53 @@ class LinkedList:
         self.delete(to_delete, to_delete.get_next_node())
 
 
+# slow pointer --> 0,1,2,3,4
+# fast pointer --> 0,2,4,6
+# when slow_ptr = fast_ptr --> means there's a cycle in the linked list
+def is_linked_list_cyclic(lili: LinkedList):
+    slow_ptr = fast_ptr = lili.get_head()
+    counter = 0
+    while counter < 10:
+        try:
+            if slow_ptr != lili.get_head() and slow_ptr == fast_ptr :
+                print("cycle found")
+                return True
+            else:
+                slow_ptr = slow_ptr.get_next_node()
+                fast_ptr = fast_ptr.get_next_node().get_next_node()
+                # print(f"Current status:\n  slow pointer:{slow_ptr.get_data()}\n  fast pointer:{fast_ptr.get_data()}")
+                if fast_ptr.get_next_node() is None:
+                    print("Hit tail. End of linked list reached, no cycle found")
+                    return False
+
+                counter += 1
+        except Exception as e:
+            print("Nodes exhausted. End of linked list reached, no cycle found")
+            return False
+
+
 if __name__ == '__main__':
-    tail = Node(6, None)
-    head = Node('A', tail)
-
+    tail = Node(5, None)
+    head = Node(3, tail)
+    cycle_node = Node(1, None)
     ll = LinkedList(head, tail)
-    ll.append(5)
-    ll.append(6)
-    ll.append('A')
+    ll.append(cycle_node)
     ll.append(2)
-    ll.append('A')
-    ll.append(5)
+    ll.append(4)
+    ll.append(7)
+    ll.append(9)
+    ll.get_tail().set_next_node(cycle_node)
+    print(is_linked_list_cyclic(ll))
 
-    ll2 = LinkedList()
+    tail = Node(5, None)
+    head = Node(3, tail)
+    ll2 = LinkedList(head, tail)
+    ll2.append(2)
+    ll2.append(4)
     ll2.append(7)
-    ll2.append(8)
-    ll2.append(9)
+    # ll2.append(9)
 
-    ll3 = LinkedList(Node(10))
-    ll.print_nodes()
-    print(ll.search_for_k(6).get_next_node().get_data())
-    # ll.delete(ll.search_for_k(5), ll.search_for_k(6))
-    ll.delete(ll.search_for_k('A'), )
-    ll.print_nodes()
+    ll2.print_nodes()
+    print(is_linked_list_cyclic(ll2))
 
-    # try:
-    #     ll.print_nodes()
-    #     print(ll.search_for_k('A'))
-    #     print(ll.get_nth_element(2).data)
-    #     print(f"Tail element:{ll.get_tail().data}")
-    #     print("%%%%%%%%% Second linked list : %%%%%%%%%%")
-    #     ll2.print_nodes()
-    #     print(f"Head element:{ll2.get_head().data}")
-    #     print(f"Tail element:{ll2.get_tail().data}")
-    #     print(ll2.search_for_k(7))
-    #     print(ll2.get_nth_element(1).data)
-    #     # print(ll2.search_for_k(6))
-    #     print("%%%%%%%%% Third linked list : %%%%%%%%%%")
-    #     ll3.print_nodes()
-    #     ll3.append(17)
-    #     ll3.print_nodes()
-    #     print(f"Head element:{ll3.get_head().data}")
-    #     print(f"Tail element:{ll3.get_tail().data}")
-    # except Exception as e:
-    #     print(e)
 
