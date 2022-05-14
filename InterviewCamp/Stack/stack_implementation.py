@@ -55,126 +55,45 @@ class Stack:
         while not self.is_empty() and not to_stack.is_full():
             to_stack.push(self.pop())
 
-
-OPERATORS = {"+", "-", "*", "/"}
-PRECEDENCE = {
-    "*": 2,
-    "/": 2,
-    "-": 1,
-    "+": 1
-}
-
-
-def process_expression(operand1: int, operand2: int, operator: str):
-    if operator == "+":
-        return operand1 + operand2
-    if operator == "-":
-        return operand1 - operand2
-    if operator == "*":
-        return operand1 * operand2
-    if operator == "/":
-        if operand2 == 0:
-            raise ZeroDivisionError
-        else:
-            return operand1 // operand2
-
-
-def evaluate_infix_expression(infix_expression: str):
-    """
-    maintain 2 stacks, operator stack and operand stack
-    if operand put in a stack, operator in another stack
-    if same or higher precendence operator, keep pushing,
-    if lower precendence operator, pop and evaluate with the last 2 operands
-    with the older operand being the first operand.
-    :param infix_expression: a postfix expression
-    :return: solution (int)
-    """
-    infix_expression_list = infix_expression.split(" ")
-    print(f"Expression list: {infix_expression_list}")
-    if len(infix_expression_list) > 2:
-        operand_stack = Stack(len(infix_expression_list))
-        operator_stack = Stack(len(infix_expression_list))
-
-        for char in infix_expression_list:
-            print(f"Current char:{char}")
-            if char.isdigit():
-                operand_stack.push(int(char))
-                print("Current operator stack status:", operator_stack.print_stack())
-                print("Current operand stack status:", operand_stack.print_stack())
-            elif char in OPERATORS:
-                if operator_stack.is_empty() or PRECEDENCE[char] >= PRECEDENCE[operator_stack.peek()]:
-                    operator_stack.push(char)
-                else:
-
-                    while PRECEDENCE[operator_stack.peek()] > PRECEDENCE[char]:
-                        print(f'print(PRECEDENCE[operator_stack.peek()]:{PRECEDENCE[operator_stack.peek()]}  '
-                              f'> PRECEDENCE[char]:{PRECEDENCE[char]}')
-                        operand2 = operand_stack.pop()
-                        operand1 = operand_stack.pop()
-                        operator = operator_stack.pop()
-                        solution = process_expression(operand1, operand2, operator)
-                        print(f"Expression: {operand1} {operator} {operand2}, Computed: {solution}")
-                        operand_stack.push(solution)
-                    operator_stack.push(char)
-
-        while not operator_stack.is_empty():
-            operand2 = operand_stack.pop()
-            operand1 = operand_stack.pop()
-            operator = operator_stack.pop()
-            solution = process_expression(operand1, operand2, operator)
-            print(f"Expression: {operand1} {operator} {operand2}, Computed: {solution}")
-            operand_stack.push(solution)
-
-        return operand_stack.pop()
-
-    elif len(infix_expression_list) == 0 or infix_expression == "":
-        return 0
+def find_element(stack: Stack, to_find: int):
+    if stack is None:
+        return False
+    if stack.current_length_of_stack() < 1:
+        return False
     else:
-        raise Exception("Illegal input expression")
-
-
-def evaluate_postfix_expression(postfix_expression: str):
-    """
-    if operands, push to a stack, if operator, pop last 2 elements, operate and push the result to stack
-    :param postfix_expression:
-    :return:
-    """
-
-    postfix_expression_list = postfix_expression.split(" ")
-    print(f"Postfix expression list: {postfix_expression_list}")
-    if len(postfix_expression_list) > 2:
-        operand_stack = Stack(len(postfix_expression_list))
-        for char in postfix_expression_list:
-            print(f"Current char:{char}")
-            if char in OPERATORS:
-                operand2 = operand_stack.pop()
-                operand1 = operand_stack.pop()
-                solution = process_expression(operand1, operand2, char)
-                print(f"Expression: {operand1} {char} {operand2}, Computed: {solution}")
-                operand_stack.push(solution)
-            elif char.isdigit():
-                operand_stack.push(int(char))
-                print("Current stack status:", operand_stack.print_stack())
+        temp_stack = Stack(stack.current_length_of_stack())
+        while stack.current_length_of_stack() != 0:
+            top = stack.peek()
+            if top == to_find:
+                temp_stack.flush_stack(stack)
+                return True
             else:
-                raise Exception("Invalid input expression")
-        return operand_stack.pop()
-    elif len(postfix_expression_list) == 0 or postfix_expression == "":
-        return 0
-    else:
-        raise Exception("Invalid input expression")
+                temp_stack.push(stack.pop())
+
+        temp_stack.flush_stack(stack)
+        return False
 
 
 if __name__ == '__main__':
-    postfix_expr = ["2 10 + 9 6 - /", "", "1 -", "c d"]
-    # for expr in postfix_expr:
-    #     try:
-    #         print(f"Solution:{evaluate_postfix_expression(expr)}")
-    #     except Exception as e:
-    #         print(f"Oops! Error occurred: {e}")
+    my_stack = Stack(5)
+    # try:
+    #     for i in range(1, 7):
+    #         my_stack.push(i)
+    #         my_stack.print_stack()
+    # except Exception as e:
+    #     print(e)
+    #
+    # try:
+    #     for i in range(1, 7):
+    #         my_stack.pop()
+    #         my_stack.print_stack()
+    # except Exception as e:
+    #     print(e)
 
-    infix_expr = ["1 + 2", "1 + 2 * 8 / 4", "1 +", "c f"]
-    for expr in infix_expr:
-        try:
-            print(f"Solution:{evaluate_infix_expression(expr)}")
-        except Exception as e:
-            print(f"Oops! Error occurred: {e}")
+    another_stack = Stack(7)
+    for i in range(11, 18):
+        another_stack.push(i)
+
+    print(find_element(another_stack, 11))
+    another_stack.print_stack()
+    print(find_element(another_stack, 10))

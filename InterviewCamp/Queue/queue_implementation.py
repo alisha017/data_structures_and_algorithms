@@ -1,4 +1,6 @@
 from typing import Any
+
+
 class Queue:
     def __init__(self, arr_len: int):
         self.__front = 0
@@ -29,6 +31,12 @@ class Queue:
         print(f"Front element at: {self.__front}, {self.__array[self.__front]}")
         print(f"Back element at: {self.__back}, {self.__array[self.__back]}")
         print(f"Current length = {self.__current_length}")
+
+    def get_front(self):
+        return self.__array[self.__front]
+
+    def get_back(self):
+        return self.__array[self.__back]
 
 
 if __name__ == '__main__':
