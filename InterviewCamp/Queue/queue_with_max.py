@@ -158,7 +158,7 @@ class Queue_With_Max:
 
 
 if __name__ == '__main__':
-    qwm =  Queue_With_Max()
+    qwm = Queue_With_Max()
 
     qwm.enqueue(2)
     print(qwm.get_max())

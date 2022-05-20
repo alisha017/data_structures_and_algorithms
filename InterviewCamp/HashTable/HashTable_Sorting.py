@@ -1,8 +1,8 @@
-'''
+"""
 Given an array of integers, find a pair of integers that sums to a number X.
 
 For e.g, if A = [6,3,5,2,1,7]. X = 4, Result= [3,1]
-'''
+"""
 
 
 def get_pair(array: list, result: int) -> list:
