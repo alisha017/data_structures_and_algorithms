@@ -55,6 +55,7 @@ class Stack:
         while not self.is_empty() and not to_stack.is_full():
             to_stack.push(self.pop())
 
+
 def find_element(stack: Stack, to_find: int):
     if stack is None:
         return False

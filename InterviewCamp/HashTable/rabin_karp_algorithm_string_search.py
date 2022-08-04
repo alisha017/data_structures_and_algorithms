@@ -1,6 +1,3 @@
-from typing import Any
-
-
 def hash_function(string: str, hash_val: int) -> int:
     if string is None:
         return 0
