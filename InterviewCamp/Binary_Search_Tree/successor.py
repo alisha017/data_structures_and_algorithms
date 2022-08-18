@@ -152,30 +152,145 @@ def inorder_tree_traversal(root: TreeNode):
     return inorder_list
 
 
+def find_first_occurrence(bst: BinarySearchTree, value: float):
+    node = bst.get_root()
+    result = None
+
+    while node is not None:
+        print(f"current node value:", node.get_node_value())
+        if node.get_node_value() > value:
+            node = node.get_left_node()
+        elif node.get_node_value() < value:
+            node = node.get_right_node()
+        else:
+            print("Matched!:", node)
+            result = node
+            node = node.get_left_node()
+
+    return result
+
+
+def find_successor(node: TreeNode, root: TreeNode):
+    result = None
+    print("****" * 20)
+    print("Current:", node.get_node_value())
+    if node.get_right_node() is not None:
+        print("node has right subtree")
+        current = node.get_right_node()
+        successor = None
+        while current is not None:
+            successor = current
+            current = current.get_left_node()
+        result = successor
+    else:
+        current = root
+        successor = None
+        value = node.get_node_value()
+        # print(f"target: {value}")
+        while current is not None:
+            # print(f"Current val: {current.get_node_value() if current.get_node_value() is not None else None}, "
+            #       f"Successor:{successor.get_node_value() if successor is not None else None}")
+            if current.get_node_value() > value:
+                successor = current
+                current = current.get_left_node()
+            elif current.get_node_value() < value:
+                current = current.get_right_node()
+            else:
+                result = successor
+                print("Matched!:", current.get_node_value(),
+                      successor.get_node_value() if successor is not None else None)
+                break
+
+    return result
+
+
+def find_successor_absent_support(node: float, root: TreeNode):
+    successor = None
+    to_find = root
+    print("****" * 20)
+
+    # find the node or find the first successor:
+    while to_find is not None:
+        print(f"to find: {to_find.get_node_value()}, node: {node}")
+        if to_find.get_node_value() < node:
+            to_find = to_find.get_right_node()
+        elif to_find.get_node_value() > node:
+            successor = to_find
+            to_find = to_find.get_left_node()
+        else:
+            # print("finding successor...")
+            # print(f"to_find:{to_find.get_node_value()}, root:{root.get_node_value()}")
+            successor = find_successor(to_find, root)
+            break
+
+    # print("Final value:", successor.get_node_value(), node_found)
+    return successor
+
+
+def find_element_or_successor_absent_support(node: float, root: TreeNode):
+    successor = None
+    to_find = root
+    print("****" * 20)
+
+    # find the node or find the first successor:
+    while to_find is not None:
+        print(f"to find: {to_find.get_node_value()}, node: {node}")
+        if to_find.get_node_value() < node:
+            to_find = to_find.get_right_node()
+        elif to_find.get_node_value() > node:
+            successor = to_find
+            to_find = to_find.get_left_node()
+        else:
+            # print("finding successor...")
+            # print(f"to_find:{to_find.get_node_value()}, root:{root.get_node_value()}")
+            return to_find
+
+    # print("Final value:", successor.get_node_value(), node_found)
+    return successor
+
+
+def find_elements_in_range(bst: BinarySearchTree, lower_limit: float, upper_limit: float):
+    root = bst.get_root()
+
+    result_list = []
+
+    successor = find_element_or_successor_absent_support(lower_limit, root)
+
+    while lower_limit <= successor.get_node_value():
+        result_list.append(successor.get_node_value())
+        print(result_list)
+        successor = find_successor_absent_support(successor.get_node_value(), root)
+        if successor.get_node_value() > upper_limit:
+            break
+
+    return result_list
+
+
 if __name__ == "__main__":
 
     my_bst = BinarySearchTree()
 
-    for i in [4, 2, 6, 1, 3, 5, 7]:
+    for i in [4, 2, 6, 1, 1.5, 3, 5, 7]:
         my_bst.add_node(i)
-    # root = TreeNode(4)
-    # node1 = TreeNode(2)
-    # node2 = TreeNode(6)
-    # node3 = TreeNode(1)
-    # node4 = TreeNode(3)
-    # node5 = TreeNode(5)
-    # node6 = TreeNode(7)
 
-    node_5 = my_bst.search_for_val(2)
-    node_6 = my_bst.search_for_val(4)
-    # node_6 = None
     print(inorder_tree_traversal(my_bst.get_root()))
 
-    my_bst.delete_node(node_5, node_6)
+    to_search = [my_bst.search_for_val(1), my_bst.search_for_val(3),
+    my_bst.search_for_val(7), my_bst.search_for_val(1.5)]
+    for node in to_search:
+        val = find_successor(node, my_bst.get_root())
+        print(val.get_node_value() if val is not None else val)
+        print("-----"*20)
 
-    node3 = my_bst.search_for_val(3)
-    print(node3.get_node_value(),
-          (node3.get_left_node().get_node_value() if node3.get_left_node() is not None else None),
-          (node3.get_right_node().get_node_value() if node3.get_right_node() is not None else None))
-    print(inorder_tree_traversal(my_bst.get_root()))
+    another_bst = BinarySearchTree()
+    for i in [8, 3, 10, 1, 6, 4, 7, 14, 13]:
+        another_bst.add_node(i)
 
+    print(inorder_tree_traversal(another_bst.get_root()))
+
+    successor_another_bst = find_successor_absent_support(14, another_bst.get_root())
+    print(successor_another_bst.get_node_value() if successor_another_bst is not None else None)
+    successor_another_bst = find_element_or_successor_absent_support(7.8, another_bst.get_root())
+    print(successor_another_bst.get_node_value() if successor_another_bst is not None else None)
+    
+    print(find_elements_in_range(another_bst, 3.5, 11))

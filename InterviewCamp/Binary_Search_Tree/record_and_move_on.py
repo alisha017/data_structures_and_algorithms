@@ -152,30 +152,34 @@ def inorder_tree_traversal(root: TreeNode):
     return inorder_list
 
 
+def find_first_occurrence(bst:BinarySearchTree, value: float):
+    node = bst.get_root()
+    result = None
+
+    while node is not None:
+        print(f"current node value:", node.get_node_value())
+        if node.get_node_value() > value:
+            node = node.get_left_node()
+        elif node.get_node_value() < value:
+            node = node.get_right_node()
+        else:
+            print("Matched!:", node)
+            result = node
+            node = node.get_left_node()
+
+    return result
+
+
 if __name__ == "__main__":
 
     my_bst = BinarySearchTree()
 
-    for i in [4, 2, 6, 1, 3, 5, 7]:
+    for i in [4, 2, 6, 1, 4, 5, 7]:
         my_bst.add_node(i)
-    # root = TreeNode(4)
-    # node1 = TreeNode(2)
-    # node2 = TreeNode(6)
-    # node3 = TreeNode(1)
-    # node4 = TreeNode(3)
-    # node5 = TreeNode(5)
-    # node6 = TreeNode(7)
 
-    node_5 = my_bst.search_for_val(2)
-    node_6 = my_bst.search_for_val(4)
-    # node_6 = None
     print(inorder_tree_traversal(my_bst.get_root()))
 
-    my_bst.delete_node(node_5, node_6)
+    print(find_first_occurrence(my_bst, 4))
 
-    node3 = my_bst.search_for_val(3)
-    print(node3.get_node_value(),
-          (node3.get_left_node().get_node_value() if node3.get_left_node() is not None else None),
-          (node3.get_right_node().get_node_value() if node3.get_right_node() is not None else None))
-    print(inorder_tree_traversal(my_bst.get_root()))
+
 

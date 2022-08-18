@@ -152,30 +152,30 @@ def inorder_tree_traversal(root: TreeNode):
     return inorder_list
 
 
+def least_common_ancestor(bst:BinarySearchTree, a:TreeNode, b:TreeNode):
+    current_node = bst.get_root()
+
+    while current_node is not None:
+        if current_node.get_node_value() > a.get_node_value() and current_node.get_node_value() > b.get_node_value():
+            current_node = current_node.get_left_node()
+        elif current_node.get_node_value() < a.get_node_value() and current_node.get_node_value() < b.get_node_value():
+            current_node = current_node.get_right_node()
+        else:
+            return current_node
+
+
 if __name__ == "__main__":
 
     my_bst = BinarySearchTree()
 
-    for i in [4, 2, 6, 1, 3, 5, 7]:
+    for i in [4, 2, 6, 1, 1.5, 3, 5, 7]:
         my_bst.add_node(i)
-    # root = TreeNode(4)
-    # node1 = TreeNode(2)
-    # node2 = TreeNode(6)
-    # node3 = TreeNode(1)
-    # node4 = TreeNode(3)
-    # node5 = TreeNode(5)
-    # node6 = TreeNode(7)
 
-    node_5 = my_bst.search_for_val(2)
-    node_6 = my_bst.search_for_val(4)
-    # node_6 = None
     print(inorder_tree_traversal(my_bst.get_root()))
 
-    my_bst.delete_node(node_5, node_6)
+    to_search = [my_bst.search_for_val(1), my_bst.search_for_val(3),
+                 my_bst.search_for_val(7), my_bst.search_for_val(1.5)]
 
-    node3 = my_bst.search_for_val(3)
-    print(node3.get_node_value(),
-          (node3.get_left_node().get_node_value() if node3.get_left_node() is not None else None),
-          (node3.get_right_node().get_node_value() if node3.get_right_node() is not None else None))
-    print(inorder_tree_traversal(my_bst.get_root()))
-
+    print(least_common_ancestor(my_bst, to_search[0], to_search[1]).get_node_value())
+    print(least_common_ancestor(my_bst, to_search[2], to_search[3]).get_node_value())
+    print(least_common_ancestor(my_bst, my_bst.search_for_val(5), my_bst.search_for_val(6)).get_node_value())

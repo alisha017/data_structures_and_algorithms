@@ -19,6 +19,7 @@ def get_prefix_sum_to_zero(array):
         else:
             sum_dictionary[sum] = i
 
+
 def get_prefix_sum_to_x(array, x):
     sum_dictionary = dict()
     sum = 0

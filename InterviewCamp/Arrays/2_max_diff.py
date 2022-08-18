@@ -18,17 +18,32 @@ def get_max_profit(stock_price_list: List[int]):
 
 def get_max_profit_upto_2(stock_price_list: List[int]):
     min_so_far = math.inf
-    # max_diff_ = 0
-    #
-    # for curr_stock_price in stock_price_list:
-    #     min_so_far = min(min_so_far, curr_stock_price)
-    #     diff = curr_stock_price - min_so_far
-    #
-    #     if diff > max_diff:
-    #         max_diff = diff
+    max_diff = 0
+    best_till_i = [0] * len(stock_price_list)
+    for i in range(len(stock_price_list)):
+        min_so_far = min(min_so_far, stock_price_list[i])
+        diff = stock_price_list[i] - min_so_far
 
-    for i in range(len(stock_price_list)-1, -1, -1):
-        pass
+        max_diff = max(max_diff, diff)
+        best_till_i[i] = max_diff
+
+    max_so_far = -math.inf
+    max_diff = 0
+    best_from_i = [0] * len(stock_price_list)
+    for i in range(len(stock_price_list) - 1, -1, -1):
+        max_so_far = max(max_so_far, stock_price_list[i])
+        diff = max_so_far - stock_price_list[i]
+        max_diff = max(diff, max_diff)
+        best_from_i[i] = max_diff
+
+    max_2_trades = 0
+    print(f"Forward loop, best till i:  {best_till_i}")
+    print(f"Backward loop, best from i: {best_from_i}")
+    for i in range(len(stock_price_list)):
+        max_second_trade = best_from_i[i + 1] if i + 1 < len(stock_price_list) else 0
+        max_2_trades = max(max_2_trades, max_second_trade + best_till_i[i])
+
+    return max_2_trades
 
 
 if __name__ == '__main__':
@@ -37,4 +52,4 @@ if __name__ == '__main__':
     for stocks in array:
         print(get_max_profit(stocks))
 
-    get_max_profit_upto_2(array[0])
+        print(get_max_profit_upto_2(stocks))
