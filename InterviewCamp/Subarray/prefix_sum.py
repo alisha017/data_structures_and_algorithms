@@ -3,7 +3,12 @@ Prefix Sums ; Level: Medium
 Given an array of integers, both -ve and +ve, find a contiguous subarray that sums to 0.
 For example: [2,4,-2,1,-3,5,-3] --> [4,-2,1,-3]
 """
+# [1,2,3,4] // 1,2
+#   |  |
 
+
+# // time comp:
+# // space comp:
 
 def get_prefix_sum_to_zero(array):
     sum_dictionary = dict()

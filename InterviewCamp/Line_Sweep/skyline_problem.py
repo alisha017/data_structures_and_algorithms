@@ -215,7 +215,7 @@ class Building_Map:
 
         print(f"Current heap status:")
         self.__max_heap.print_heap_array()
-        print("Building map:", self.__building_dictionary)
+        print("Building word_map:", self.__building_dictionary)
 
     def get_max(self):
         return self.__max_heap.get_max()

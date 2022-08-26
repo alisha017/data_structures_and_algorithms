@@ -14,6 +14,7 @@ class Node:
         self.__neighbours: List['Node'] = neighbours if neighbours is not None and len(neighbours)>0 else []
         self.__value = value
         self.__state:State = State.UNVISITED
+        self.__color:int = -1
 
     def get_neighbours(self):
         return self.__neighbours
@@ -33,6 +34,12 @@ class Node:
     def set_value(self, new_value):
         self.__value = new_value
 
+    def get_color(self):
+        return self.__color
+
+    def set_color(self, color):
+        self.__color = color
+
 
 class Graph:
     def __init__(self, nodes: List[Node] = None):
@@ -45,59 +52,28 @@ class Graph:
         self.__nodes_list.append(new_node)
 
 
-def dfs_visit(node:Node, target:int):
+def dfs_visit_and_color(node:Node, color:int):
     # mark as visiting
     node.set_state(State.VISITING)
 
     # process node
-    if node.get_value() == target:
-        return True
+    node.set_color(color)
 
     # run dfs_visit for neighbours
     for neighbour in node.get_neighbours():
-        if neighbour.get_state() == State.UNVISITED and dfs_visit(neighbour, target) is True:
-            return True
+        if neighbour.get_state() == State.UNVISITED:
+            dfs_visit_and_color(neighbour, color)
 
     # mark the node as visited
     node.set_state(State.VISITED)
 
-    return False
 
-
-def dfs(graph:Graph, target:int):
+def dfs_color_connected_components(graph:Graph):
+    color = 0
     for node in graph.get_all_nodes():
-        if node.get_state() == State.UNVISITED and dfs_visit(node, target) is True:
-            return True
-
-    return False
-
-
-def dfs_copy(node:Node, old_new_graph_map:Dict[Node, Node]):
-    node.set_state(State.VISITING)
-    for neighbour in node.get_neighbours():
-        if neighbour not in old_new_graph_map:
-            old_new_graph_map[neighbour] = Node(neighbour.get_value())
-
-        # adding the neighbour as the neighbour of the copied root
-        neighbour_copy = old_new_graph_map[neighbour]
-
-        root_copy = old_new_graph_map[node]
-        root_copy.add_neighbours(neighbour_copy)
-
-        old_new_graph_map[neighbour].get_neighbours()
-        if neighbour.get_state() == State.UNVISITED:
-            dfs_copy(neighbour, old_new_graph_map)
-
-    node.set_state(State.VISITED)
-
-
-def clone_graph(root:Node):
-    if root is None:
-        return None
-
-    old_new_graph_map = {root:Node(root.get_value())}
-    dfs_copy(root, old_new_graph_map)
-    return old_new_graph_map
+        if node.get_state() == State.UNVISITED:
+            dfs_visit_and_color(node, color)
+            color += 1
 
 
 if __name__ == "__main__":
@@ -108,17 +84,30 @@ if __name__ == "__main__":
     node5 = Node(5)
     node6 = Node(6)
 
+    node7 = Node(7)
+    node8 = Node(8)
+
     node1.add_neighbours(node2)
     node1.add_neighbours(node3)
     node2.add_neighbours(node4)
+    node2.add_neighbours(node1)
     node3.add_neighbours(node4)
     node3.add_neighbours(node5)
+    node3.add_neighbours(node1)
     node4.add_neighbours(node6)
+    node4.add_neighbours(node3)
+    node4.add_neighbours(node2)
     node5.add_neighbours(node6)
+    node5.add_neighbours(node3)
 
-    my_graph = Graph([node1, node2, node3, node4, node5, node6])
+    node7.add_neighbours(node8)
+    node8.add_neighbours(node7)
 
-    # print([(node.get_value(), node) for node in my_graph.get_all_nodes()])
+    my_graph = Graph([node1, node2, node3, node4, node5, node6, node7, node8])
+
+    dfs_color_connected_components(my_graph)
+
+    print([(node.get_value(), node.get_color()) for node in my_graph.get_all_nodes()])
     # print(my_graph.get_all_nodes()[2].get_neighbours())
 
     # 2 and 4 will show not present because while traversing for 9, the node's state changed to visited
@@ -126,12 +115,6 @@ if __name__ == "__main__":
     # print(dfs(my_graph, 2))
     # print(dfs(my_graph, 4))
 
-    result: Dict[Node, Node] = clone_graph(node1)
-
-    for key, value in result.items():
-        print(f"original val:{key.get_value()}, clone_val:{value.get_value()}")
-        print(f"\tNeighbours: original:{[neighbour.get_value() for neighbour in key.get_neighbours()]}")
-        print(f"\tNeighbours: clone:{[neighbour.get_value() for neighbour in value.get_neighbours()]}")
 
 
 
