@@ -11,7 +11,7 @@ def single_partition(num_array: List[int], pivot_index: int, start: int, end: in
     # cloud for elements <= pivot element
     less = start
 
-    for i in range(start+1, end+1):
+    for i in range(start + 1, end + 1):
         if num_array[i] <= num_array[start]:
             num_array[less + 1], num_array[i] = num_array[i], num_array[less + 1]
             less += 1
@@ -48,12 +48,8 @@ def find_kth_helper(num_array: List[int], target_index: int, start: int, end: in
 if __name__ == '__main__':
     array: List[int] = [5, 7, 4, 6, 5, 3, 3]
     k = 3
-    print(find_kth_helper(array, k-1, 0, len(array) - 1))
+    print(find_kth_helper(array, k - 1, 0, len(array) - 1))
 
-    array = [4,6,1,2,4,3,5]
+    array = [4, 6, 1, 2, 4, 3, 5]
     k = 3
-    print(find_kth_helper(array, k-1, 0, len(array) - 1))
-
-
-
-
+    print(find_kth_helper(array, k - 1, 0, len(array) - 1))

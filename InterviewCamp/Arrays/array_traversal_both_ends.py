@@ -30,19 +30,23 @@ def get_subarray_sort(arr:List[int]=None) -> Optional[List[int]]:
             else:
                 j -= 1
 
+        print(f"i={i}, j={j}, lower_index={lower_index}, upper_index={upper_index}")
         min_ele = min(arr[lower_index:upper_index+1])
         max_ele = max(arr[lower_index:upper_index+1])
-
+        print(f"min:{min_ele}, max:{max_ele}")
         i, j = j+1, i-1
 
         while i < len(arr):
             if arr[i] < max_ele:
                 upper_index += 1
+                print(f"iterating in i, i={i}, arr[i]={arr[i]}, upper={upper_index}")
             i += 1
 
         while j >= 0:
             if arr[j] > min_ele:
                 lower_index -= 1
+                print(f"iterating in j, j={j}, arr[j]={arr[j]}, upper={lower_index}")
+
             j -= 1
 
         return arr[lower_index:upper_index+1]

@@ -70,12 +70,27 @@ def is_balanced(node: TreeNode):
     left_height = is_balanced(node.get_left_node())
     right_height = is_balanced(node.get_right_node())
 
-    if left_height == -1 or right_height == -1:
-        return -1
+    if left_height == 0 or right_height == 0:
+        print("the tree is one-sided! :-(")
+        return 0
     if abs(left_height-right_height) > 1:
+        print("The tree is unbalanced")
         return -1
 
     return 1 + max(left_height, right_height)
+
+
+def get_min_depth(root: TreeNode):
+    if root is None:
+        return 0
+    else:
+        left_height = get_min_depth(root.get_left_node())
+        right_height = get_min_depth(root.get_right_node())
+
+        if left_height == 0 or right_height == 0:
+            return max(left_height, right_height) + 1
+        else:
+            return min(left_height, right_height) + 1
 
 
 if __name__ == "__main__":
@@ -88,12 +103,13 @@ if __name__ == "__main__":
     node6 = TreeNode(7)
     node7 = TreeNode(8)
     root.set_right_node(node2)
-    root.set_left_node(node1)
-    node1.set_left_node(node3)
-    node1.set_right_node(node4)
+    # root.set_left_node(node1)
+    # node1.set_left_node(node3)
+    # node1.set_right_node(node4)
     node2.set_left_node(node5)
-    node2.set_right_node(node6)
-    node3.set_left_node(node7)
+    # node2.set_right_node(node6)
+    # node3.set_left_node(node7)
     print(inorder_tree_traversal(root))
     print(height(root))
     print(is_balanced(root))
+    print(get_min_depth(root))

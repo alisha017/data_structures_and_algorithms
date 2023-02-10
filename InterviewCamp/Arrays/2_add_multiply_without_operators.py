@@ -7,8 +7,7 @@ def zero_pad_array(array, pad_len):
 
 
 def add_without_operator(num1: List[int], num2: List[int]):
-    larger_num = num1 if len(num1) > len(num2) else num2
-    smaller_num = num1 if larger_num == num2 else num2
+    larger_num, smaller_num = (num1, num2) if len(num1) > len(num2) else (num2, num1)
 
     result = [0] * (len(larger_num) + 1)
 

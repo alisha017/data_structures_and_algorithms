@@ -46,7 +46,6 @@ def get_prefix_sum_to_x(array, x):
 if __name__ == '__main__':
     array = [2,4,-2,1,-3,5,-3]
     # print(get_prefix_sum_to_zero(array))
-    # print(get_prefix_sum_to_x(array, 5))
+    print(get_prefix_sum_to_x(array, 5))
 
     print(get_prefix_sum_to_x([4,-8,9,-4,1,-8,-1,6], 6))
-    pass

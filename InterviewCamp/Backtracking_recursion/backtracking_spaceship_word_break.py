@@ -26,8 +26,8 @@ def split_word(string: str, start_index: int, memo: List[State], result: List[st
                 return True
             else:
                 result.pop()
-                memo[i] = State.NOT_FOUND
-        print(f"New result:{result}, memo[{i}]:{memo[i]}")
+        print(f"New result:{result}, memo[{i}]:{memo[i]}, string[{i}]:{string[i]}")
+    memo[start_index] = State.NOT_FOUND
     return False
 
 
@@ -36,7 +36,8 @@ def word_break_problem(string: str):
         return None
 
     memo = [State.UNVISITED] * len(string)
-    dictionary = {"i", "like", "man", "mango", "tan", "tango", "go", "a", "an", "the"}
+    # dictionary = {"i", "like", "man", "mango", "tan", "tango", "go", "a"}
+    dictionary = {"an", "the", "cats", "cat", "dog", "and", "sand"}
     result = []
 
     if split_word(string, 0, memo, result, dictionary) is True:
@@ -48,7 +49,8 @@ def word_break_problem(string: str):
 if __name__ == "__main__":
     print("Hello world!")
 
-    words = ["ilikemangotango", "ilikemango", "ilikechocolate"]
+    # words = ["ilikemangotango", "ilikemango", "ilikechocolate"]
+    words = ["catsandogcat"]
 
     for word in words:
         print(word_break_problem(word))

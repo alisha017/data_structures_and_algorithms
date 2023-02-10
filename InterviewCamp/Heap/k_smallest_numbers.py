@@ -14,15 +14,12 @@ class Node:
     def __init__(self, value, index):
         self.__value = value
         self.__index = index
-        self.__parent_index = Max_Heap.parent(index)
-        self.__left_child_index = Max_Heap.left(index)
-        self.__right_child_index = Max_Heap.right(index)
+        self.__parent_index: int = Max_Heap.parent(self.__index)
+        self.__left_child_index: int = Max_Heap.left(self.__index)
+        self.__right_child_index: int = Max_Heap.right(self.__index)
 
     def get_value(self):
         return self.__value
-
-    def get_index(self):
-        return self.__index
 
     def get_parent_index(self):
         return self.__parent_index
@@ -33,15 +30,14 @@ class Node:
     def get_right_child_index(self):
         return self.__right_child_index
 
-    def set_value(self, new_val):
-        self.__value = new_val
+    def get_index(self):
+        return self.__index
 
     def set_index(self, new_index):
         self.__index = new_index
-
-        self.__parent_index = Max_Heap.parent(self.__index)
-        self.__left_child_index = Max_Heap.left(self.__index)
-        self.__right_child_index = Max_Heap.right(self.__index)
+        self.__parent_index: int = Max_Heap.parent(self.__index)
+        self.__left_child_index: int = Max_Heap.left(self.__index)
+        self.__right_child_index: int = Max_Heap.right(self.__index)
 
 
 class Max_Heap:
@@ -84,12 +80,12 @@ class Max_Heap:
         if self.__size == 0:
             raise HeapUnderflow
 
-        self.__size -= 1
-
         # replacing the max element with the rightmost (the last) element
         self.__array[0] = self.__array[self.__size-1]
         self.__array[self.__size - 1] = Node(-sys.maxsize, self.__size - 1)
         self.__array[0].set_index(0)
+        self.__size -= 1
+
         self.heapify(0)
 
     def delete_a_node(self, node: Node):
@@ -107,8 +103,6 @@ class Max_Heap:
             self.heapify(index)
 
     def propagate_up(self, index):
-        print("propagating up...")
-        print(self.parent(index), self.__array[self.parent(index)].get_value(), self.__array[index].get_value())
         while self.__array[self.parent(index)].get_value() < self.__array[index].get_value() and index > 0:
             self.__array[self.parent(index)], self.__array[index] = self.__array[index], self.__array[
                 self.parent(index)]
@@ -125,9 +119,7 @@ class Max_Heap:
         right_child = self.__array[self.right(index)] \
             if self.is_valid(self.right(index)) is True else Node(-sys.maxsize, self.__size)
 
-        print(f"left_child:{left_child}, right_child:{right_child}")
         max_element = max(max(self.__array[index].get_value(), left_child.get_value()), right_child.get_value())
-        print(f"max element: {max_element}")
 
         # if an element is repeating, this method will only take the relevant index instead
         max_index = index
@@ -136,7 +128,6 @@ class Max_Heap:
         elif max_element == right_child.get_value():
             max_index = self.right(index)
 
-        print(f"max_index: {max_index}")
         if max_index != index:
             self.__array[index], self.__array[max_index] = self.__array[max_index], self.__array[index]
             self.__array[index].set_index(index)
@@ -146,18 +137,27 @@ class Max_Heap:
     def print_heap_array(self):
         print([node.get_value() for node in self.__array[:self.__size]])
 
+    def is_empty(self):
+        return True if self.__size == 0 else False
 
-if __name__ == '__main__':
-    my_heap = Max_Heap(8)
+    def is_full(self):
+        return True if self.__size == len(self.__array) else False
 
-    for num in [10, 2, 8, 4, 6, 3, 1]:
-        print(f"Inserting {num}")
-        my_heap.insert(num)
 
-    my_heap.print_heap_array()
-    my_heap.insert(9)
-    my_heap.print_heap_array()
-    print(my_heap.parent(1), my_heap.left(1), my_heap.right(1))
+def get_k_smallest_numbers(arr: List[int], k: int):
+    my_max_heap = Max_Heap(k)
+    my_max_heap.insert(arr[0])
+    for i in range(1, len(arr)):
+        if arr[i] < my_max_heap.get_max():
+            print(f"Inserting {arr[i]}...")
+            if my_max_heap.is_full():
+                print(f"Heap is full, deleting {my_max_heap.get_max()}")
+                my_max_heap.delete_max()
 
-    my_heap.delete_max()
-    my_heap.print_heap_array()
+            my_max_heap.insert(arr[i])
+
+    my_max_heap.print_heap_array()
+
+
+if __name__ == "__main__":
+    get_k_smallest_numbers([6, 3, 6, 6, 2, 2, 4], 4)

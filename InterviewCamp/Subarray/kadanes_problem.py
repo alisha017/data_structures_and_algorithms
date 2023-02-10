@@ -14,7 +14,7 @@ def get_contiguous_array_with_max_sum(arr: List[int] = None) -> Optional[List[in
             # print(current_sum, max_sum)
 
             if current_sum < arr[i]:
-                current_sum = max_sum = arr[i]
+                current_sum = arr[i]
                 lower_boundary = i
             if max_sum < current_sum:
                 max_sum = current_sum

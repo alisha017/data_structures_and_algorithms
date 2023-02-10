@@ -14,3 +14,5 @@ def coin_change_count(target:int, coins: List[int]):
 
 if __name__ == "__main__":
     print(coin_change_count(5, [1, 2, 5]))
+    print(coin_change_count(11, [1, 2, 5]))
+    print(coin_change_count(3, [2]))

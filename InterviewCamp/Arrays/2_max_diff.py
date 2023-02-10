@@ -47,7 +47,7 @@ def get_max_profit_upto_2(stock_price_list: List[int]):
 
 
 if __name__ == '__main__':
-    array: List[List[int]] = [[1, 3, 5, 2, 6, 4, 7, 8, 9], [9, 3, 2, 1, 5, 7, 2, 8, 3, 4]]
+    array: List[List[int]] = [[1, 3, 5, 2, 6, 4, 7, 8, 9], [9, 3, 2, 1, 5, 7, 2, 8, 3, 4], [5, 9, 4, 2, 9, 7, 6]]
 
     for stocks in array:
         print(get_max_profit(stocks))

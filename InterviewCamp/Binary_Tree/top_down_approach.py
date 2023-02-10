@@ -104,6 +104,27 @@ def get_path(node: TreeNode, path=""):
     get_path(node.get_right_node(), path)
 
 
+# shouldn't use list since it is mutable and holds all the values of the recursive stack
+# therefore use an immutable data structure like str for it to wok with the recursive stack
+def get_path_list(node: TreeNode, path=[]):
+    if node is None:
+        return
+
+    path.append(node.get_node_value())
+
+    if node.get_left_node() is None:
+        print(path)
+        return
+
+    get_path_list(node.get_left_node(), path)
+
+    if node.get_right_node() is None:
+        print(path)
+        return
+
+    get_path_list(node.get_right_node(), path)
+
+
 def get_height(node):
     result = MutableInt()
     height(node, result)
@@ -131,6 +152,7 @@ if __name__ == "__main__":
     print("Tree height:", get_height(root))
 
     get_path(root)
+    get_path_list(root)
     root = TreeNode(4)
     # node1 = TreeNode(2)
     # node2 = TreeNode(6)

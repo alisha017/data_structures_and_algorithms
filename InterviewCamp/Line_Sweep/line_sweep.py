@@ -33,8 +33,8 @@ def if_overlapping_interval(intervals):
             counter += 1
 
         print(counter)
-        # if counter > 1:
-        #     return True
+        if counter > 1:
+            return True
 
     return False
 
@@ -42,3 +42,4 @@ def if_overlapping_interval(intervals):
 if __name__ == '__main__':
     print(if_overlapping_interval([[5,7], [1,3], [6,9]]))
     print(if_overlapping_interval([(1,3), (3,5), (6,8), (7,9)]))
+    print(if_overlapping_interval([(1,2), (3,5), (6,8)]))

@@ -84,19 +84,22 @@ def lowest_common_ancestor_with_parent_info(a: TreeNode, b: TreeNode):
     # get depth difference and find which node is deeper and which one is shallow
     depth_diff = a_depth - b_depth
 
-    deeper = a_ptr if depth_diff > 0 else b_ptr
-    shallow = a_ptr if depth_diff < 0 else b_ptr
+    deeper, shallow = (a_ptr, b_ptr) if depth_diff > 0 else (b_ptr, a_ptr)
 
     # move the pointer to the deeper node to the shallow node level
     for i in range(abs(depth_diff)):
         deeper = deeper.get_parent()
 
     # iterate up until the shallow node and deep node become equal
-    while deeper.get_parent() != shallow.get_parent():
-        deeper = deeper.get_parent()
-        shallow = shallow.get_parent()
 
-    return deeper.get_parent()
+    if shallow == deeper:
+        return deeper
+    else:
+        while deeper.get_parent() != shallow.get_parent():
+            deeper = deeper.get_parent()
+            shallow = shallow.get_parent()
+
+        return deeper.get_parent()
 
 
 def lowest_common_ancestor_without_parent_info(current_node: TreeNode, a: TreeNode, b: TreeNode):
@@ -106,10 +109,16 @@ def lowest_common_ancestor_without_parent_info(current_node: TreeNode, a: TreeNo
         return current_node
 
     left_lca = lowest_common_ancestor_without_parent_info(current_node.get_left_node(), a, b)
+    print(f"current node:{current_node.get_node_value()}, left lca = {left_lca.get_node_value() if left_lca is not None else None}")
     right_lca = lowest_common_ancestor_without_parent_info(current_node.get_right_node(), a, b)
+    print(f"current node:{current_node.get_node_value()}, right lca = {right_lca.get_node_value() if right_lca is not None else None}")
 
+    # when left lca and right lca both are not none, then that node is the common ancestor (current_node)
+    # meaning on either sides of the lca
     if left_lca is not None and right_lca is not None:
         return current_node
+    # if either left lca or right lca are not nulls,
+    # means that the deeper node is a part of the subtree of shallow node
     elif left_lca is not None and right_lca is None:
         return left_lca
     elif left_lca is None and right_lca is not None:
@@ -133,5 +142,7 @@ if __name__ == "__main__":
     node2.set_right_node(node6)
     node4.set_left_node(node7)
 
-    print(lowest_common_ancestor_without_parent_info(root, node7, node3).get_node_value())
-    print(lowest_common_ancestor_with_parent_info(node7, node5).get_node_value())
+    # print("without withoutoparent", lowest_common_ancestor_without_parent_info(root, node7, node3).get_node_value())
+    print("without oparent",lowest_common_ancestor_without_parent_info(root, node7, node4).get_node_value())
+    print("with oparent",lowest_common_ancestor_with_parent_info(node7, node3).get_node_value())
+    print("with oparent",lowest_common_ancestor_with_parent_info(node1, node7).get_node_value())

@@ -54,9 +54,9 @@ def inorder_tree_traversal(root: TreeNode):
     return inorder_list
 
 
-def get_diameter_of_tree(node: TreeNode, max_diameter: int = 0):
+def get_diameter_of_tree(node: TreeNode):
     if node is None:
-        return 0, max_diameter
+        return 0, 0
 
     left_height, left_max_diameter = get_diameter_of_tree(node.get_left_node())
     right_height, right_max_diameter = get_diameter_of_tree(node.get_right_node())

@@ -1,7 +1,6 @@
 import sys
 from typing import List
 # from functools import cmp_to_key
-import heapq
 
 
 class Point:
@@ -9,7 +8,6 @@ class Point:
         self.__y_height = y_height
         self.__x_coord = x_coord
         self.__is_start_point = is_start_point
-
     def get_x_coord(self):
         return self.__x_coord
 

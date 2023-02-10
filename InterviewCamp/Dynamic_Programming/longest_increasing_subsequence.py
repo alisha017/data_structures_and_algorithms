@@ -11,14 +11,15 @@ def get_longest_increasing_subsequence(num_list: List[int]):
     """
     longest = [1]*len(num_list)
     result = 1
-    lis = []
+    print(num_list, "\n************")
     for i in range(len(num_list)):
         for j in range(i):
             if num_list[j] < num_list[i]:
+                print(f"\tnum_list[j] < num_list[i]--> longest[i]={longest[i]}, longest[j]+1={longest[j]+1}")
                 longest[i] = max(longest[i], longest[j]+1)
+            print(f"num[i]:{num_list[i]}({i}), num[j]:{num_list[j]}({j}), longest:{longest}")
 
         result = max(result, longest[i])
-    print(lis)
     return result
 
 

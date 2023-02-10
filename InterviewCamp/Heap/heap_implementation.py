@@ -49,11 +49,10 @@ class Max_Heap:
         if self.__size == 0:
             raise HeapUnderflow
 
-        self.__size -= 1
-
         # replacing the max element with the rightmost (the last) element
         self.__array[0] = self.__array[self.__size-1]
         self.__array[self.__size-1] = -sys.maxsize
+        self.__size -= 1
 
         self.heapify(0)
 

@@ -7,6 +7,10 @@ def swap(a: int, b: int):
     b = temp
     return a, b
 
+'''
+You are given an array of integers. Rearrange the array so that all zeroes are at the beginning of the array.
+For example, [4,2,0,1,0,3,0] -> [0,0,0,4,1,2,3]
+'''
 
 def zeroes_at_the_end(arr: List[int] = None) -> Optional[List[int]]:
     if arr is None:
@@ -35,7 +39,11 @@ def zeroes_at_the_beginning(arr: List[int] = None) -> Optional[List[int]]:
             counter += 1
         return arr
 
-
+'''
+Given an array with n marbles colored Red, White or Blue, sort them so that marbles of the same color are adjacent, with the colors in the order Red, White and Blue.
+Assume the colors are given as numbers - 0 (Red), 1 (White) and 2 (Blue).
+For example, if A = [1,0,1,2,1,0,1,2], Output = [0,0,1,1,1,1,2,2].
+'''
 def dutch_flag_problem(pivot: int = None, arr: List[int] = None) -> Optional[List[int]]:
     if arr is None or pivot is None:
         return arr

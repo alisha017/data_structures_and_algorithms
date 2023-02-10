@@ -1,9 +1,9 @@
 def hash_function(string: str, hash_val: int) -> int:
     if string is None:
         return 0
-    hash_sum: int = ord(string[0])
+    hash_sum: int = 0   # ord(string[0])
     x = hash_val
-    for i in range(1, len(string)):
+    for i in range(len(string)):
         hash_sum = hash_sum * x + ord(string[i])
     return hash_sum
 
@@ -21,19 +21,19 @@ def rabin_karp_string_search(string, to_search):
     result_hash_sum = hash_function(to_search, hash_val)
 
     for i in range(0, len(string)-window_size+1):
-        print(f"string[i:window_size]: {string[i:i + window_size]}")
+        # print(f"string[i:window_size]: {string[i:i + window_size]}")
         # print(f"string[i + window_size]: {string[i + window_size]}")
 
         if i != 0:
-            hash_sum = (hash_sum - ord(string[i-1])*(hash_val**(window_size-1))) * hash_val \
-                       + ord(string[i + window_size - 1])
+            hash_sum = (hash_sum - hash_function(string[i-1], hash_val)*(hash_val**(window_size-1))) * hash_val \
+                       + hash_function(string[i + window_size - 1], hash_val)
             # print(f"string[i-1]: {string[i - 1]}\n{hash_sum - ord(string[i - 1]) ** (window_size - 1)}")
         else:
             hash_sum = hash_function(string[i:i+window_size], hash_val)
 
         # print(f"hash_sum: {hash_sum}, result_wanted: {result_hash_sum}\n")
 
-        if hash_sum == result_hash_sum and to_search == string[i:i+window_size]:
+        if hash_sum == result_hash_sum : #and to_search == string[i:i+window_size]:
             return i
 
     return -1

@@ -47,9 +47,42 @@ def index_of_k_when_inserted(array, k):
                 return high
 
 
-def find_first_occurrence(array, k):
-    high = len(array)
+def find_first_occurrence(array, target):
+    high = len(array) -1
     low = 0
+    result = -1
+
+    while low <= high:
+        mid = (high+low)//2
+
+        if array[mid] > target :
+            high = mid - 1
+        elif array[mid] < target:
+            low = mid + 1
+        else:
+            result = mid
+            high = mid - 1
+
+    return result
+
+
+def find_last_occurrence(array, target):
+    high = len(array) -1
+    low = 0
+    result = -1
+
+    while low <= high:
+        mid = (high+low)//2
+
+        if array[mid] > target :
+            high = mid - 1
+        elif array[mid] < target:
+            low = mid + 1
+        else:
+            result = mid
+            low = mid + 1
+
+    return result
 
 
 def find_target_or_nearest_element(array, k):
@@ -77,8 +110,10 @@ def find_target_or_nearest_element(array, k):
 if __name__ == '__main__':
     array = [1,2,6,8]
     k = 6
-    print(search_for_k(array, k))
-    print(index_of_k_when_inserted([1,2,4,4,6,8], 3))
+    # print(search_for_k(array, k))
+    # print(index_of_k_when_inserted([1,2,4,4,6,8], 3))
     # print(index_of_k_when_inserted([1,2,4,4,6,8], 0))
     # print(index_of_k_when_inserted([1,2,4,4,4,6,8], 4))
     # print(find_target_or_nearest_element([1, 2, 4, 5, 8, 9], 6))
+    print(find_first_occurrence([1,2,2,2,3,4,4,4,5], 2))
+    print(find_last_occurrence([1,2,2,2,3,4,4,4,5], 4))

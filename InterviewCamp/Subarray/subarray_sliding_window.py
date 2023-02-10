@@ -45,6 +45,7 @@ def get_longest_substring_with_unique_char(string: str) -> str:  # Optional[Set[
 
             # why max? because if there's another repeating char between previous occurrence of char and current
             # occurrence, then taking the latest one
+            # j = max of last pos of repeating char + 1 and start of the substring
 
             # since the char already exists in the dictionary,
             # char_dictionary[string[i]] + 1 --> char next to the repeating one
