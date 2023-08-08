@@ -62,8 +62,6 @@ class LRUCache:
 
             # append the new node and update the dictionary
             self.add_element(node)
-            # update the current length
-            self.__current_length += 1
 
     def read_from_cache(self, node: Node):
         if node.get_data() in self.__linked_hash_map:
@@ -81,10 +79,13 @@ class LRUCache:
         else:
             self.__remove_from_linked_list(to_delete)
             del self.__linked_hash_map[to_delete.get_data()]
+            self.__current_length -= 1
 
     def add_element(self, to_add):
         self.__add_to_linked_list(to_add)
         self.__linked_hash_map[to_add.get_data()] = self.__tail
+        # update the current length
+        self.__current_length += 1
 
     def __remove_from_linked_list(self, to_delete):
         if to_delete.get_prev_node() is not None:

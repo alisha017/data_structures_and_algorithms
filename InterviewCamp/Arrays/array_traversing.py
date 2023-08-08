@@ -69,6 +69,7 @@ def best_solution(array: List[int] = None) -> Optional[List[int]]:
             end -= 1
             array[end] = array[iterator]
 
+        print(f"{end}, {iterator}, {array}")
         iterator -= 1
 
     return array

@@ -1,5 +1,6 @@
 """
-Level: MediumGiven an array of integers, find the shortest sub array, that if sorted, results in the entire array being sorted.
+Level: Medium
+Given an array of integers, find the shortest sub array, that if sorted, results in the entire array being sorted.
 
 For example:[1,2,4,5,3,5,6,7] --> [4,5,3] - If you sort from indices 2 to 4, the entire array is sorted.
 [1,3,5,2,6,4,7,8,9] --> [3,5,2,6,4] -  If you sort from indices 1 to 5, the entire array is sorted.
@@ -29,19 +30,23 @@ def get_subarray_sort(arr:List[int]=None) -> Optional[List[int]]:
             else:
                 j -= 1
 
+        print(f"i={i}, j={j}, lower_index={lower_index}, upper_index={upper_index}")
         min_ele = min(arr[lower_index:upper_index+1])
         max_ele = max(arr[lower_index:upper_index+1])
-
+        print(f"min:{min_ele}, max:{max_ele}")
         i, j = j+1, i-1
 
         while i < len(arr):
             if arr[i] < max_ele:
                 upper_index += 1
+                print(f"iterating in i, i={i}, arr[i]={arr[i]}, upper={upper_index}")
             i += 1
 
         while j >= 0:
             if arr[j] > min_ele:
                 lower_index -= 1
+                print(f"iterating in j, j={j}, arr[j]={arr[j]}, upper={lower_index}")
+
             j -= 1
 
         return arr[lower_index:upper_index+1]

@@ -29,21 +29,32 @@ def get_subarray_with_sum_n(arr: List[int] = None, target: int = None) -> Option
     return {start_pos, end_pos}
 
 
-def get_longest_substring_with_unique_char(string: str) -> str: #Optional[Set[int]]:
+def get_longest_substring_with_unique_char(string: str) -> str:  # Optional[Set[int]]:
     string.lower()
     end_pos = 0
     start_pos = 0
     substr = ''
+    # a dictionary to maintain the latest position of the characters
     char_dictionary = {}
     max_substr = substr
-    j = 0
+
     for i in range(len(string)):
 
         if string[i] in char_dictionary:
             print(f"char = {string[i]} max of {char_dictionary[string[i]]+1}, {start_pos} ")
 
             # why max? because if there's another repeating char between previous occurrence of char and current
-            # occurrence, then taking
+            # occurrence, then taking the latest one
+            # j = max of last pos of repeating char + 1 and start of the substring
+
+            # since the char already exists in the dictionary,
+            # char_dictionary[string[i]] + 1 --> char next to the repeating one
+            # susbtr[0] --> the start of the substring
+            # if the substr contains string[i] i.e.location of string[i] < substr[0] then taking the next character
+            # eg: what[w]hywhere -- what --> hatw
+            # if location of string[i] > substr[0], then updating a substring from there
+            # eg. whatwhyw[h]ere -- atwhy -- ywh
+
             j = max(char_dictionary[string[i]]+1, char_dictionary[substr[0]])
             char_dictionary[string[i]] = i
             substr = string[j:i+1]
@@ -69,10 +80,11 @@ def get_longest_substring_with_unique_char(string: str) -> str: #Optional[Set[in
 
 
 if __name__ == '__main__':
-    array = [1, 2, 3, 5, 2]
-    target = 8
-    # print(get_subarray_with_sum_n(array, target))
-    print(get_longest_substring_with_unique_char("whatwhywhere"))
-    print(get_longest_substring_with_unique_char("GEEKSFORGEEKS"))
-    print(get_longest_substring_with_unique_char("mehulmistryalishasingh"))
-    print(get_longest_substring_with_unique_char("pickoutthelongestsubstring"))
+    array = [3,1,3,5,9,2,1,4,5,6,0]
+    target = 10
+    print(get_subarray_with_sum_n(array, target))
+
+    # print(get_longest_substring_with_unique_char("whatwhywhere"))
+    # print(get_longest_substring_with_unique_char("GEEKSFORGEEKS"))
+    # print(get_longest_substring_with_unique_char("mehulmistryalishasingh"))
+    # print(get_longest_substring_with_unique_char("pickoutthelongestsubstring"))
