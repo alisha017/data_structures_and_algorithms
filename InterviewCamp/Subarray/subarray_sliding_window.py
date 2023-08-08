@@ -80,11 +80,11 @@ def get_longest_substring_with_unique_char(string: str) -> str:  # Optional[Set[
 
 
 if __name__ == '__main__':
-    array = [1, 2, 3, 5, 2]
-    target = 8
-    # print(get_subarray_with_sum_n(array, target))
+    array = [3,1,3,5,9,2,1,4,5,6,0]
+    target = 10
+    print(get_subarray_with_sum_n(array, target))
 
-    print(get_longest_substring_with_unique_char("whatwhywhere"))
+    # print(get_longest_substring_with_unique_char("whatwhywhere"))
     # print(get_longest_substring_with_unique_char("GEEKSFORGEEKS"))
     # print(get_longest_substring_with_unique_char("mehulmistryalishasingh"))
     # print(get_longest_substring_with_unique_char("pickoutthelongestsubstring"))
