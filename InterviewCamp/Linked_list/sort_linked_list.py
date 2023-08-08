@@ -110,7 +110,7 @@ def sort_nodes(linked_list: LinkedList):
             nodes_dictionary[node.data].append(node.data)
         node = node.next
     all_nodes = list(nodes_dictionary.keys())
-    all_nodes.sort()
+    all_nodes.sort()  # O(nlogn)
     # for node_data in all_nodes:
     #     nodes_dictionary[node_data].print_nodes()
 
