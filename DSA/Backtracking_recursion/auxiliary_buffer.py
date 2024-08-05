@@ -146,10 +146,10 @@ def print_all_coin_combinations(coins_list, target):
 
 if __name__ == "__main__":
     arr = [1, 2, 3, 4, 5, 6, 7]
-    # print_all_combinations_of_array(arr, 3)
-    # print_all_combinations_of_array([1,2,3,4], 2)
-    # print_all_subsets_of_array(arr)
-    # print_all_permutations_of_array(arr, 3)
+    print_all_combinations_of_array(arr, 3)
+    print_all_combinations_of_array([1,2,3,4], 2)
+    print_all_subsets_of_array(arr)
+    print_all_permutations_of_array(arr, 3)
     phone_number = ["021", "234"]
     [print_all_combos_phone_pnemonics(num) for num in phone_number]
 

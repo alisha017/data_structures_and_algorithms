@@ -1,11 +1,9 @@
-"""
-Given an array of numbers, replace each even number with two of the same number. e.g, [1,2,5,6,8] -> [1,2,2,5,6,6,8,8].
-Assume that the array has enough space to accommodate the result.
-"""
-
 from typing import Optional, List
 
 
+# Given an array of numbers, replace each even number with two of the same number.
+# e.g, [1,2,5,6,8] -> [1,2,2,5,6,6,8,8].
+# Assume that the array has enough space to accommodate the result.
 def my_solution(array: list = None) -> Optional[list]:
     """
     Time complexity - O(nlogn)
@@ -55,7 +53,7 @@ def best_solution(array: List[int] = None) -> Optional[List[int]]:
     if array is None or len(array) == 0:
         return array
 
-    iterator: int = len(array)-1
+    iterator: int = len(array) - 1
     array = expand_array_for_even_numbers(array)
     end: int = len(array)
 
@@ -75,29 +73,42 @@ def best_solution(array: List[int] = None) -> Optional[List[int]]:
     return array
 
 
+def even_append(nums: List[int]) -> List[int]:
+    original_nums_len = len(nums)
+    for i in range(original_nums_len):
+        if nums[i] % 2 == 0:
+            nums.append(0)
+
+    j = len(nums) - 1
+    for i in range(original_nums_len - 1, -1, -1):
+        if nums[i] % 2 == 0:
+            nums[j] = nums[i]
+            j -= 1
+        nums[j] = nums[i]
+        j -= 1
+    return nums
+
+
 def reverse_sentence(string: str) -> str:
     """
-
+    Time complexity: O(n)
+    Space complexity: O(n)
     :type string: str
     """
     string_list: List[str] = string.split(" ")
-    string_list.reverse()
+    string_list.reverse()  # O(n)
     return " ".join(string_list)
 
 
 if __name__ == '__main__':
-    num_array: list = [1, 2, 5, 6, 8]
+    num_array: list = [1, 2, 5, 7, 6, 8]
 
     print(my_solution(num_array))
+    print(even_append(num_array))
 
-    print(better_solution(num_array))
-
-    print(best_solution(num_array))
+    # print(better_solution(num_array))
+    #
+    # print(best_solution(num_array))
 
     string: str = "i live in a house"
     print(reverse_sentence(string))
-
-
-
-
-

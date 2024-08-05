@@ -2,9 +2,7 @@ def print_subsets_of_array(a, buffer_, start_index, buffer_index):
     # 1 termination case - buffer full
     print(buffer_[: buffer_index])
 
-    if buffer_index == len(buffer_):
-        return
-    if start_index == len(a):
+    if buffer_index == len(buffer_) or start_index == len(a):
         return
 
     # 2 find candidates
@@ -17,7 +15,7 @@ def print_subsets_of_array(a, buffer_, start_index, buffer_index):
 
 if __name__ == "__main__":
     a = [1,2,3,4]
-    buffer_ = [None, None, None]
+    buffer_ = [None, None, None, None]
     start_index = 0
     buffer_index = 0
     print(print_subsets_of_array(a, buffer_, start_index, buffer_index))

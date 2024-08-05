@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 class Node:
     def __init__(self):
         self.__is_word:bool = False
-        self.__map:Dict[str, 'Node'] = dict()
+        self.__map:Dict[str, 'Node'] = dict()  # for character at the current level
 
     def get_is_word(self):
         return self.__is_word

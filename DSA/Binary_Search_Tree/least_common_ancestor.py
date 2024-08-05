@@ -179,3 +179,8 @@ if __name__ == "__main__":
     print(least_common_ancestor(my_bst, to_search[0], to_search[1]).get_node_value())
     print(least_common_ancestor(my_bst, to_search[2], to_search[3]).get_node_value())
     print(least_common_ancestor(my_bst, my_bst.search_for_val(5), my_bst.search_for_val(6)).get_node_value())
+
+'''
+"1:0,2:3,4:5,6:10"
+
+'''
